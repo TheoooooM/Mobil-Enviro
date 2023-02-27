@@ -1,5 +1,8 @@
-﻿using Archi.Service.Interface;
+﻿using System;
+using Archi.Service.Interface;
 using UnityEngine;
+using static AdresseHelper;
+using Object = UnityEngine.Object;
 
 namespace Archi.Service
 {
@@ -10,7 +13,28 @@ namespace Archi.Service
 
         public void DrawCanvas(Enums.MajorCanvas canvas)
         {
-            swi
+            string address = "";
+            switch (canvas)
+            {
+                case Enums.MajorCanvas.menu:
+                    address = "MainMenuCanvas";
+                    break;
+                case Enums.MajorCanvas.inGame:
+                    break;
+                case Enums.MajorCanvas.tool:
+                    address = "ToolCanvas";
+                    break;
+                case Enums.MajorCanvas.level:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(canvas), canvas, null);
+            }
+            LoadAssetWithCallback<GameObject>(address, DrawCanvasAsync);
+        }
+
+        void DrawCanvasAsync(GameObject canvas)
+        {
+            var go = Object.Instantiate(canvas);
         }
 
         public void GeneratePopUp(string title, string message, Sprite icon = null)
