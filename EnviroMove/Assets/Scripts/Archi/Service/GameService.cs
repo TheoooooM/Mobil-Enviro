@@ -1,7 +1,9 @@
-﻿using Archi.Service.Interface;
+﻿using System;
+using Archi.Service.Interface;
 using Attributes;
 using Google.MiniJSON;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Archi.Service
 {
@@ -17,6 +19,30 @@ namespace Archi.Service
         }
 
         #region Interface
+
+        public void ChangeScene(Enums.SceneType type)
+        {
+            switch (type)
+            {
+                case Enums.SceneType.tool:
+                    SceneManager.LoadScene("Tool");
+                    m_Interface.DrawCanvas(Enums.MajorCanvas.tool);
+                    
+                    break;
+                case Enums.SceneType.mainMenu:
+                    throw new NotImplementedException(); 
+                    throw new NotImplementedException(); 
+                    break;
+                case Enums.SceneType.levels:
+                    break;
+                case Enums.SceneType.inGame:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
+            }
+        }
+
+        
         public void CreateLoading()
         {
             throw new System.NotImplementedException();

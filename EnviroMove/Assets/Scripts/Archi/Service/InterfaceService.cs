@@ -1,5 +1,6 @@
 ﻿using System;
 using Archi.Service.Interface;
+using Attributes;
 using UnityEngine;
 using static AdresseHelper;
 using Object = UnityEngine.Object;
@@ -8,6 +9,8 @@ namespace Archi.Service
 {
     public class InterfaceService : Service, IInterfaceService
     {
+        [DependeOnService] private IGameService m_Game;
+        
         protected override void Initialize()
         { }
 
@@ -34,7 +37,10 @@ namespace Archi.Service
 
         void DrawCanvasAsync(GameObject canvas)
         {
-            var go = Object.Instantiate(canvas);
+            var go = Object.Instantiate(canvas); 
+            var canvasUtilities = go.GetComponent<CanvasUtilities>();
+            if(!canvasUtilities) canvasUtilities = go.GetComponentInChildren<CanvasUtilities>();
+            canvasUtilities.m_Game = m_Game;
         }
 
         public void GeneratePopUp(string title, string message, Sprite icon = null)

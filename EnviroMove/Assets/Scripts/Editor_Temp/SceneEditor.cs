@@ -98,8 +98,10 @@ public class SceneEditor : MonoBehaviour
         Vector3 position = Input.GetTouch(0).position;
         RaycastHit hitRay;
         Ray ray = _camera.ScreenPointToRay(position);
+        Debug.Log("TryCast");
         if (Physics.Raycast(ray, out hitRay))
         {
+            Debug.Log(hitRay.point);
             position = hitRay.normal switch
             {
                 Vector3 up when up == Vector3.up => hitRay.point + new Vector3(0, 0.5f, 0),

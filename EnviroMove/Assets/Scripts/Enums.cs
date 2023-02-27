@@ -9,4 +9,9 @@
   {
     menu, inGame, tool, level
   }
+
+  public enum SceneType
+  {
+     mainMenu, tool, levels, inGame
+  }
 }

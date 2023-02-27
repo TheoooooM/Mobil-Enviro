@@ -16,7 +16,15 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: 3b0f196d9253167459adf86c862a488c
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: 2bc9f02828abcf74cb1a000930d17227
+    m_Address: MainMenuCanvas
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 91791064eaced1f4181ac90a85654e82
+    m_Address: ToolCanvas
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 82e0f30f3c1edce43a4c60a314e23462, type: 2}
   m_SchemaSet:
