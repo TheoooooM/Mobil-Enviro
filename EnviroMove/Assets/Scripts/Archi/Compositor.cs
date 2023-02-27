@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Reflection;
+using Archi.Service.Interface;
 using Cysharp.Threading.Tasks;
-using Services.Interfaces;
 using UnityEngine;
 using Attributes;
 
