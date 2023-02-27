@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
@@ -10,7 +11,8 @@ using JsonUtility = UnityEngine.JsonUtility;
 public class SceneEditor : MonoBehaviour
 {
     [SerializeField] private GameObject[] prefabs;
-    
+
+    private List<List<List<GameObject>>> grid = new();
     private GameObject selectedPrefab;
     public int selectedPrefabIndex = 0;
     
