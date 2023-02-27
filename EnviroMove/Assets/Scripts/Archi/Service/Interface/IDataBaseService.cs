@@ -12,8 +12,8 @@ namespace Archi.Service.Interface
         void DeleteData(LevelData data, string id, string userName);
         void UpdateData();
         
-        void GenerateDataLevel(string jsonData, string key = null);
-        void UpdateDataLevel(string jsonData);
+        void GenerateDataLevel(LevelData data, string key = null);
+        void UpdateDataLevel(string jsonData, string dataId);
         void RemovedataLevel(string key);
         
         string GetUniqueIdentifier();

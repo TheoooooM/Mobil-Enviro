@@ -10,7 +10,7 @@ namespace Archi.Service
 
         public void DrawCanvas(Enums.MajorCanvas canvas)
         {
-            throw new System.NotImplementedException();
+            swi
         }
 
         public void GeneratePopUp(string title, string message, Sprite icon = null)

@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class LevelData : MonoBehaviour
 {
+    public string id;
+    
     private Vector2Int size;
     private int[,,] blockGrid; //Grid by index of blocksUse
     private string[] blocksUse;

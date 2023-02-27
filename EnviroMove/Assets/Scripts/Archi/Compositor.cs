@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Reflection;
+using Archi.Service;
 using Archi.Service.Interface;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -43,8 +44,9 @@ public class Compositor : MonoBehaviour
     void CreateServices()
     {
         //Debug.Log("Create Service");
-        //AddService<IGameService>(new GameService());
-        //AddService<ITimeService>(new TimeService());
+        AddService<IGameService>(new GameService());
+        AddService<ITickService>(new TickService());
+        AddService<IInterfaceService>(new InterfaceService());
     }
 
     void AddService<T>(T service) where  T : IService
