@@ -176,7 +176,7 @@ public class SceneEditor : MonoBehaviour
 
     public void SaveData()
     {
-       m_Data.GenerateDataLevel(data);
+       // m_Data.GenerateDataLevel(data);
     }
     
     public void LoadData(LevelData dataToLoad)

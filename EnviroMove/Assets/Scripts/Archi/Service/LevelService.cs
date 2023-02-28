@@ -11,7 +11,7 @@ namespace Archi.Service
         protected override void Initialize()
         { }
 
-        public Level LoadLevel(LevelData data, GameObject levelContainer= null)
+        public Level LoadLevel(LevelData data, GameObject levelContainer = null)
         {
             Level level;
             if (levelContainer) level = levelContainer.AddComponent<Level>();

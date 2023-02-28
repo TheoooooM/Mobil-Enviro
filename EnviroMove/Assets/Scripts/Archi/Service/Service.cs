@@ -32,6 +32,7 @@ namespace Archi.Service
 
         protected void SetObjectDependencies(object obj)
         {
+            Debug.Log(obj);
             var fields = obj.GetType() .GetFields(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
             foreach (var field in fields)
             {

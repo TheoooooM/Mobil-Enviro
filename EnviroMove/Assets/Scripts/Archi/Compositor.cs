@@ -44,7 +44,9 @@ public class Compositor : MonoBehaviour
     void CreateServices()
     {
         //Debug.Log("Create Service");
-        //AddService<IGameService>(new GameService());
+        AddService<IGameService>(new GameService());
+        AddService<IToolService>(new ToolService());
+        AddService<IDataBaseService>(new DataBaseService());
         AddService<ITickService>(new TickService());
         AddService<IInterfaceService>(new InterfaceService());
     }
@@ -99,7 +101,7 @@ public class Compositor : MonoBehaviour
                     infos.field.SetValue(infos.obj, service);
                 }
             }
-            else throw new MissingMemberException("Missing Service");
+            else throw new MissingMemberException($"Missing Service typeof({type})");
         }
     }
 

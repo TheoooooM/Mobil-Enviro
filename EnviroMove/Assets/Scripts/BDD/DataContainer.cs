@@ -12,11 +12,11 @@ namespace BDD
 
         public DataContainer() // Récupère tout les addressable avec le label Level
         {
-            Addressables.LoadAssetsAsync<string>("info", (string json) =>
-            {
-                allDatas.Add(JsonUtility.FromJson<LevelInfo>(json));
-                Debug.Log($"Found {allDatas.Count} item(s) ");
-            });
+            // Addressables.LoadAssetsAsync<string>("info", (string json) =>
+            // {
+            //     allDatas.Add(JsonUtility.FromJson<LevelInfo>(json));
+            //     Debug.Log($"Found {allDatas.Count} item(s) ");
+            // });
         }
     }
 }
