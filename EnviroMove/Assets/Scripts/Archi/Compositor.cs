@@ -44,14 +44,13 @@ public class Compositor : MonoBehaviour
     void CreateServices()
     {
         //Debug.Log("Create Service");
-        AddService<IGameService>(new GameService());
+        //AddService<IGameService>(new GameService());
         AddService<ITickService>(new TickService());
         AddService<IInterfaceService>(new InterfaceService());
     }
 
     void AddService<T>(T service) where  T : IService
     {
-        Debug.Log($"Add {service}");
         if (servicesDictionnary.ContainsKey(typeof(T))) throw new DuplicateNameException("Double Services");
         servicesDictionnary.Add(typeof(T), service);
 
@@ -61,14 +60,11 @@ public class Compositor : MonoBehaviour
 
     void CollectServiceDependencies(object obj)
     {
-        Debug.Log($"Collect {obj} dependecies");
         var type = obj.GetType();
         var fields = type.GetFields(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
-        Debug.Log($"Fields of {type} : {fields.Length}");
         foreach (var field in fields)
         {
            var dependenceFields = Attribute.GetCustomAttributes(field, typeof(DependeOnService));
-           Debug.Log("Dependencies finds : " + dependenceFields.Length);
            if (dependenceFields.Length == 0) continue;
            foreach (var _ in dependenceFields)
            {
@@ -90,7 +86,6 @@ public class Compositor : MonoBehaviour
 
     void ResoleDepencencies()
     {
-        Debug.Log("Resolve Dependencies");
         foreach (KeyValuePair<Type,List<DependenceInfos>> dependenceInfo in fieldDependenciesDictionnary)
         {
             Type type = dependenceInfo.Key;
@@ -102,7 +97,6 @@ public class Compositor : MonoBehaviour
                 foreach (var infos in fieldInfos)
                 {
                     infos.field.SetValue(infos.obj, service);
-                    Debug.Log("Set Service");
                 }
             }
             else throw new MissingMemberException("Missing Service");

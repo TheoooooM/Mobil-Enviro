@@ -3,5 +3,9 @@
     public interface IToolService : IService
     {
         void ShowTool();
+
+        
+
+        void SaveCurrentLevel(); //TODO
     }
 }

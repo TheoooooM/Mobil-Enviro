@@ -1,6 +1,7 @@
 ﻿using System;
 using Archi.Service.Interface;
 using Attributes;
+using UI;
 using UnityEngine;
 using static AdresseHelper;
 using Object = UnityEngine.Object;
@@ -40,7 +41,7 @@ namespace Archi.Service
             var go = Object.Instantiate(canvas); 
             var canvasUtilities = go.GetComponent<CanvasUtilities>();
             if(!canvasUtilities) canvasUtilities = go.GetComponentInChildren<CanvasUtilities>();
-            canvasUtilities.m_Game = m_Game;
+            SetObjectDependencies(canvasUtilities);
         }
 
         public void GeneratePopUp(string title, string message, Sprite icon = null)

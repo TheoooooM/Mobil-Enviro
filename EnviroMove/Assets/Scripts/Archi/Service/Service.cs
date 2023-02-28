@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Reflection;
 using Archi.Service.Interface;
 using Attributes;
 using UnityEngine;
@@ -26,6 +28,30 @@ namespace Archi.Service
         {
             SetServiceState(!currentServiceState);
             return currentServiceState;
+        }
+
+        protected void SetObjectDependencies(object obj)
+        {
+            var fields = obj.GetType() .GetFields(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+            foreach (var field in fields)
+            {
+                var dependenceFields = Attribute.GetCustomAttributes(field, typeof(ServiceDependency));
+                if(dependenceFields.Length == 0)continue;
+                foreach (var _ in dependenceFields)
+                {
+                    var varType = field.FieldType;
+                    if (varType.IsInterface && typeof(IService).IsAssignableFrom(varType) &&
+                        varType != typeof(IService))
+                    {
+                        var serviceFields = GetType().GetFields(BindingFlags.NonPublic | BindingFlags.Public |
+                                                                BindingFlags.Instance | BindingFlags.DeclaredOnly);
+                        foreach (var serviceField in serviceFields)
+                        {
+                            if(serviceField.FieldType == varType) field.SetValue(obj,serviceField.GetValue(this));
+                        }
+                    }
+                }
+            }
         }
     }
 }

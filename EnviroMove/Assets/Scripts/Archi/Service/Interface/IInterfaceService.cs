@@ -10,6 +10,5 @@ namespace Archi.Service.Interface
 
         void GenerateLoadingScreen(string loadingName, float loadingMaxValue);
         void UpdateLoadingScreen(float progressValue);
-        void HideLoadingScreen();
     }
 }

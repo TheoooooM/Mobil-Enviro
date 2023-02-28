@@ -27,15 +27,15 @@ namespace Archi.Service
                 case Enums.SceneType.tool:
                     SceneManager.LoadScene("Tool");
                     m_Interface.DrawCanvas(Enums.MajorCanvas.tool);
-                    
                     break;
                 case Enums.SceneType.mainMenu:
                     throw new NotImplementedException(); 
-                    throw new NotImplementedException(); 
                     break;
                 case Enums.SceneType.levels:
+                    throw new NotImplementedException(); 
                     break;
                 case Enums.SceneType.inGame:
+                    throw new NotImplementedException(); 
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);

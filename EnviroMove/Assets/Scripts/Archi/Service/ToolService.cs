@@ -1,4 +1,5 @@
 ﻿using Archi.Service.Interface;
+using Levels;
 
 namespace Archi.Service
 {
@@ -8,6 +9,16 @@ namespace Archi.Service
         { }
 
         public void ShowTool()
+        {
+            throw new System.NotImplementedException();
+        }
+        
+        private LevelData GetEditorData()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void SaveCurrentLevel()
         {
             throw new System.NotImplementedException();
         }
