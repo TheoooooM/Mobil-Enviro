@@ -1,4 +1,7 @@
-using System.Collections.Generic;
+using System;
+using System.Linq;
+using Archi.Service.Interface;
+using Interfaces;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
@@ -10,32 +13,38 @@ using JsonUtility = UnityEngine.JsonUtility;
 
 public class SceneEditor : MonoBehaviour
 {
+    public IDataBaseService m_Data;
+    
     [SerializeField] private GameObject[] prefabs;
 
-    private List<List<List<GameObject>>> grid = new();
     private GameObject selectedPrefab;
-    public int selectedPrefabIndex = 0;
-    
+    public int selectedPrefabIndex;
+
     [SerializeField] private int sizeOfGridSpace = 1;
 
     private int[] screenSize;
     private Camera _camera;
-    
+
     private GameObject parent;
-    
+
     [SerializeField] private string path;
     [SerializeField] private TMP_InputField inputField;
 
     public bool isMoveCamera = true;
-    
-    
-    
+
+
+    //LevelData
+    private Vector3Int size;
+    public int[,,] blockGrid;
+    public int[] blocksUsed;
+
+
     private enum EditorMode
     {
         create,
         delete,
     }
-    
+
     [SerializeField] private EditorMode Mode = EditorMode.create;
 
     private void Start()
@@ -44,6 +53,7 @@ public class SceneEditor : MonoBehaviour
         {
             inputField.text = "newScene";
         }
+
         _camera = Camera.main;
         parent = new GameObject(name);
         path = "Assets/SavedPrefab/" + parent.name + ".prefab";
@@ -64,7 +74,7 @@ public class SceneEditor : MonoBehaviour
             case EditorMode.create:
                 Create();
                 break;
-            
+
             case EditorMode.delete:
                 Delete();
                 break;
@@ -104,12 +114,12 @@ public class SceneEditor : MonoBehaviour
             Debug.Log(hitRay.point);
             position = hitRay.normal switch
             {
-                Vector3 up when up == Vector3.up => hitRay.point + new Vector3(0, 0.5f, 0),
-                Vector3 down when down == Vector3.down => hitRay.point + new Vector3(0, -0.5f, 0),
-                Vector3 left when left == Vector3.left => hitRay.point + new Vector3(-0.5f, 0, 0),
-                Vector3 right when right == Vector3.right => hitRay.point + new Vector3(0.5f, 0, 0),
-                Vector3 forward when forward == Vector3.forward => hitRay.point + new Vector3(0, 0, 0.5f),
-                Vector3 back when back == Vector3.back => hitRay.point + new Vector3(0, 0, -0.5f),
+                var up when up == Vector3.up => hitRay.point + new Vector3(0, 0.5f, 0),
+                var down when down == Vector3.down => hitRay.point + new Vector3(0, -0.5f, 0),
+                var left when left == Vector3.left => hitRay.point + new Vector3(-0.5f, 0, 0),
+                var right when right == Vector3.right => hitRay.point + new Vector3(0.5f, 0, 0),
+                var forward when forward == Vector3.forward => hitRay.point + new Vector3(0, 0, 0.5f),
+                var back when back == Vector3.back => hitRay.point + new Vector3(0, 0, -0.5f),
                 _ => position
             };
         }
@@ -123,7 +133,6 @@ public class SceneEditor : MonoBehaviour
         position.z = Mathf.Round(position.z / sizeOfGridSpace) * sizeOfGridSpace;
         var newGo = Instantiate(selectedPrefab, position, Quaternion.identity);
         newGo.transform.parent = parent.transform;
-        newGo.transform.localScale = new Vector3(1, 1, 1);
     }
 
     private void Delete()
@@ -136,7 +145,44 @@ public class SceneEditor : MonoBehaviour
             Destroy(hitRay.transform.gameObject);
         }
     }
+
+    private void UpdateGrid()
+    {
+        foreach (Transform child in parent.transform)
+        {
+            var position = child.position;
+            size = new Vector3Int(Mathf.RoundToInt(position.x), Mathf.RoundToInt(position.y),
+                Mathf.RoundToInt(position.z));
+            blockGrid = new int[size.x,size.y,size.z];
+            for (int x = 0; x < size.x; x++)
+            {
+                for (int y = 0; y < size.y; y++)
+                {
+                    for (int z = 0; z < size.z; z++)
+                    {
+                        blockGrid[x, y, z] = -1;
+                    }
+                }
+            }
+            foreach (Transform block in parent.transform)
+            {
+                var blockPosition = block.position;
+                blockGrid[Mathf.RoundToInt(blockPosition.x), Mathf.RoundToInt(blockPosition.y),
+                    Mathf.RoundToInt(blockPosition.z)] = Array.IndexOf(prefabs, block.gameObject);
+            }
+        }
+    }
+
+    public void SaveData()
+    {
+       m_Data.GenerateDataLevel(data);
+    }
     
+    public void LoadData(LevelData dataToLoad)
+    {
+        
+    }
+
     public void CleanScene()
     {
         parent = GameObject.Find(inputField.text);
@@ -153,55 +199,11 @@ public class SceneEditor : MonoBehaviour
 
     public void SwitchMode(int index)
     {
-        Mode = (EditorMode) index;
+        Mode = (EditorMode)index;
     }
-    
+
     public void ChangeMoveCamera()
     {
         isMoveCamera = !isMoveCamera;
     }
-
-#if UNITY_EDITOR
-    public void SaveScene()
-    {
-        if (AssetDatabase.LoadAssetAtPath<GameObject>(path) != null)
-        {
-            Debug.LogError("Name already exists");
-            return;
-        }
-        
-        if (parent.name == "")
-        {
-            Debug.LogError("Name is empty");
-            return;
-        }
-        if (parent.transform.childCount == 0)
-        {
-            Debug.LogError("Parent is empty");
-            return;
-        }
-        PrefabUtility.SaveAsPrefabAsset(parent, path);
-    }
-    
-    public void LoadScene()
-    {
-        var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(path);
-        prefab.name = inputField.text;
-        Instantiate(prefab);
-    }
-#endif
-#if UNITY_STANDALONE && !UNITY_EDITOR
-    public void SaveScene()
-    {
-       //TODO
-
-    }
-    
-    public void LoadScene()
-    {
-        //TODO
-    }
-#endif
-    
-
 }
