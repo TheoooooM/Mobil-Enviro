@@ -2,6 +2,7 @@
 using Levels;
 using Unity.VisualScripting;
 using UnityEngine;
+using LevelData = Levels.LevelData;
 
 namespace Archi.Service
 {

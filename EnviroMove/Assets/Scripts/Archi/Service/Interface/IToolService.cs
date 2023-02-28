@@ -1,4 +1,6 @@
-﻿namespace Archi.Service.Interface
+﻿using Levels;
+
+namespace Archi.Service.Interface
 {
     public interface IToolService : IService
     {

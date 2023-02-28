@@ -1,6 +1,7 @@
 using Archi.Service.Interface;
 using Attributes;
 using Levels;
+using LevelData = Levels.LevelData;
 
 namespace UI
 {
