@@ -1,6 +1,7 @@
 ﻿using System;
 using Archi.Service.Interface;
 using Attributes;
+using UI;
 using UnityEngine;
 using static AdresseHelper;
 using Object = UnityEngine.Object;
@@ -38,11 +39,14 @@ namespace Archi.Service
 
         void DrawCanvasAsync(GameObject canvas)
         {
-            var go = Object.Instantiate(canvas); 
+            Debug.Log(canvas);
+            var go = Object.Instantiate(canvas);
+            Debug.Log(go);
             var canvasUtilities = go.GetComponent<CanvasUtilities>();
+            Debug.Log(canvasUtilities);
             if(!canvasUtilities) canvasUtilities = go.GetComponentInChildren<CanvasUtilities>();
-            canvasUtilities.m_Game = m_Game;
-            canvasUtilities.m_Tool = m_Tool;
+            Debug.Log(canvasUtilities);
+            SetObjectDependencies(canvasUtilities);
         }
 
         public void GeneratePopUp(string title, string message, Sprite icon = null)

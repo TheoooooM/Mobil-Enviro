@@ -1,6 +1,7 @@
 using Archi.Service.Interface;
 using Attributes;
 using Levels;
+using UnityEngine.SceneManagement;
 
 namespace UI
 {
@@ -8,9 +9,15 @@ namespace UI
     {
         [ServiceDependency] private IToolService m_Tool;
 
-        public void SaveLevel()
+        public void LaunchTool()
         {
-            m_Tool.SaveCurrentLevel();
+            SceneManager.LoadScene("Tool");
+            m_Tool.ShowTool();
+        }
+    
+        public void ChangePrefab(int index)
+        {
+            m_Tool.ChangePrefab(index);
         }
         
         private LevelData GetEditorData()
