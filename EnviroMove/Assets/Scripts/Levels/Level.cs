@@ -5,7 +5,7 @@ namespace Levels
 {
    public class Level : MonoBehaviour
    {
-      public global::LevelData levelData;
+      public LevelData levelData;
       private IBoardable[,,] board;
       private GameObject[] blocksUse;
 
