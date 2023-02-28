@@ -11,6 +11,7 @@ namespace Archi.Service
     public class InterfaceService : Service, IInterfaceService
     {
         [DependeOnService] private IGameService m_Game;
+        [DependeOnService] private IToolService m_Tool;
         
         protected override void Initialize()
         { }
@@ -38,9 +39,13 @@ namespace Archi.Service
 
         void DrawCanvasAsync(GameObject canvas)
         {
-            var go = Object.Instantiate(canvas); 
+            Debug.Log(canvas);
+            var go = Object.Instantiate(canvas);
+            Debug.Log(go);
             var canvasUtilities = go.GetComponent<CanvasUtilities>();
+            Debug.Log(canvasUtilities);
             if(!canvasUtilities) canvasUtilities = go.GetComponentInChildren<CanvasUtilities>();
+            Debug.Log(canvasUtilities);
             SetObjectDependencies(canvasUtilities);
         }
 

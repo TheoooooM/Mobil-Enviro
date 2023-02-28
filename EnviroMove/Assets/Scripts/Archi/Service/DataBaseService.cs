@@ -10,6 +10,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Windows;
 using File = System.IO.File;
+using LevelData = Levels.LevelData;
 
 namespace Archi.Service
 {
@@ -21,7 +22,6 @@ namespace Archi.Service
         protected override void Initialize()
         {
             levelPath = $"{Application.persistentDataPath}/SaveData/Level/";
-            throw new System.NotImplementedException();
         }
 
         public string LevelPath() {return levelPath;}
